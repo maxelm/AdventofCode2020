@@ -1,4 +1,4 @@
-﻿namespace AdventOfCode2020
+﻿namespace AdventOfCode2020.Models
 {
 	public class Day1 : DayBase
 	{

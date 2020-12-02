@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Net;
 using System.Text;
 
@@ -26,6 +27,14 @@ namespace AdventOfCode2020
 
 			var result = client.DownloadData(url);
 			Input = Encoding.UTF8.GetString(result).Split("\n").Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+		}
+
+		public void Solve()
+		{
+			Console.WriteLine($"--- AoC2020 Day {Day} ---");
+			Console.WriteLine($"Level 1 Answer: {Level1()}");
+			Console.WriteLine($"Level 2 Answer: {Level2()}");
+			Console.WriteLine($"---------------------\n");
 		}
 	}
 }
