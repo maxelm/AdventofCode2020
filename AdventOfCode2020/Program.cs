@@ -4,3 +4,4 @@ const string COOKIE = "session=53616c7465645f5f7bfb7351527dca968da37e38b356b8c1d
 
 new Day1(COOKIE).Solve();
 new Day2(COOKIE).Solve();
+new Day3(COOKIE).Solve();

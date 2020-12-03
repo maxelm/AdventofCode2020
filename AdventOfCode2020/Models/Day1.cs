@@ -2,7 +2,7 @@
 {
 	public class Day1 : DayBase
 	{
-		public override string Day => "1";
+		public override int Day => 1;
 
 		public Day1(string cookie) : base(cookie)
 		{

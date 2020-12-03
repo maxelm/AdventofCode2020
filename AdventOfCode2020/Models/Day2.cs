@@ -8,7 +8,7 @@ namespace AdventOfCode2020.Models
 		{
 		}
 
-		public override string Day => "2";
+		public override int Day => 2;
 
 		public override string Level1()
 		{
@@ -53,5 +53,7 @@ namespace AdventOfCode2020.Models
 			}
 			return validPasswords.ToString();
 		}
+
+		// @"(\d+)-(\d+)\s(\w):\s(\w*)"
 	}
 }

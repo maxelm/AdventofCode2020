@@ -8,7 +8,7 @@ namespace AdventOfCode2020
 	public abstract class DayBase
 	{
 		private readonly string cookie;
-		public abstract string Day { get; }
+		public abstract int Day { get; }
 		public string[] Input { get; set; }
 		public abstract string Level1();
 		public abstract string Level2();
