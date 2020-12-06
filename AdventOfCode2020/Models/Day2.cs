@@ -1,4 +1,6 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace AdventOfCode2020.Models
 {
@@ -12,48 +14,48 @@ namespace AdventOfCode2020.Models
 
 		public override string Level1()
 		{
-			int validPasswords = 0;
-			foreach (var item in Input)
+			int counter = 0;
+			foreach (var line in Input)
 			{
-				int min = int.Parse(Regex.Match(item, @"\d+-+\d*").Groups[0].Value.Split("-")[0]);
-				int max = int.Parse(Regex.Match(item, @"\d+-+\d*").Groups[0].Value.Split("-")[1]);
-				char reqChar = Regex.Match(item, @"[a-z]+:").Groups[0].Value[0];
-				string password = Regex.Match(item, @"([a-z])*$").Groups[0].Value;
-
-				int matchedChars = 0;
-				foreach (var character in password)
-				{
-					if (reqChar == character)
-						matchedChars++;
-				}
-				if (matchedChars >= min && matchedChars <= max)
-					validPasswords++;
+				var entry = GetEntry(line);
+				var occurences = entry.Password.ToCharArray().Count(x => x == entry.Target);
+				if (occurences >= entry.Min && occurences <= entry.Max)
+					counter++;
 			}
-			return validPasswords.ToString();
+			return counter.ToString();
 		}
 
 		public override string Level2()
 		{
-			int validPasswords = 0;
-			foreach (var item in Input)
+			int counter = 0;
+			foreach (var line in Input)
 			{
-				var first = int.Parse(Regex.Match(item, @"\d+-+\d*").Groups[0].Value.Split("-")[0]) - 1;
-				var second = int.Parse(Regex.Match(item, @"\d+-+\d*").Groups[0].Value.Split("-")[1]) - 1;
-				var reqChar = Regex.Match(item, @"[a-z]+:").Groups[0].Value[0];
-				var password = Regex.Match(item, @"([a-z])*$").Groups[0].Value;
-
-				var validCharPlacement = 0;
-				for (int i = 0; i < password.Length; i++)
+				var entry = GetEntry(line);
+				if (IsValidEntry(entry))
 				{
-					if ((i == first || i == second) && password[i] == reqChar)
-						validCharPlacement++;
+					counter++;
 				}
-				if (validCharPlacement == 1)
-					validPasswords++;
 			}
-			return validPasswords.ToString();
+			return counter.ToString();
 		}
 
-		// @"(\d+)-(\d+)\s(\w):\s(\w*)"
+		private static bool IsValidEntry(Entry entry)
+		{
+			return (entry.Password[entry.Min - 1] == entry.Target) ^ (entry.Password[entry.Max - 1] == entry.Target);
+		}
+
+		private static Entry GetEntry(string input)
+		{
+			var pattern = @"(\d+)-(\d+)\s(\w):\s(\w*)";
+			var r = new Regex(pattern, RegexOptions.IgnoreCase);
+			var m = r.Match(input);
+			if (m.Success)
+			{
+				return new Entry(Convert.ToInt32(m.Groups[1].Value), Convert.ToInt32(m.Groups[2].Value), Convert.ToChar(m.Groups[3].Value), m.Groups[4].Value);
+			}
+			return null;
+		}
+		
+		private record Entry(int Min, int Max, char Target, string Password);
 	}
 }
