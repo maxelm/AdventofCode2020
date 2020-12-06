@@ -1,4 +1,7 @@
-﻿namespace AdventOfCode2020.Models
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace AdventOfCode2020.Models
 {
 	public class Day3 : DayBase
 	{
@@ -10,26 +13,29 @@
 
 		public override string Level1()
 		{
-			return GetTreesHit(3, 1).ToString();
+			return GetTreesHitForSlope(new Slope(3, 1)).ToString();
 		}
 
 		public override string Level2()
 		{
-			return (GetTreesHit(1, 1) * GetTreesHit(3, 1) * GetTreesHit(5, 1) * GetTreesHit(7, 1) * GetTreesHit(1, 2)).ToString();
+			var slopes = new List<Slope> { new Slope(1, 1), new Slope(3, 1), new Slope(5, 1), new Slope(7, 1), new Slope(1,2) };
+			return slopes.Aggregate((long)0, (value, next) => value * GetTreesHitForSlope(next)).ToString();
 		}
 
-		private long GetTreesHit(int right, int down)
+		private long GetTreesHitForSlope(Slope slope)
 		{
-			int treeCounter = 0;
+			int counter = 0;
 			int columnIndex = 0;
-			for (int i = 0; i < Input.Length; i += down)
+			for (int i = 0; i < Input.Length; i += slope.Down)
 			{
 				if (Input[i][columnIndex] == '#')
-					treeCounter++;
+					counter++;
 
-				columnIndex = (columnIndex + right) % Input[i].Length;
+				columnIndex = (columnIndex + slope.Right) % Input[i].Length;
 			}
-			return treeCounter;
+			return counter;
 		}
+
+		private record Slope(int Right, int Down);
 	}
 }

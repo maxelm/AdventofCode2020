@@ -47,11 +47,11 @@ namespace AdventOfCode2020.Models
 		private static Entry GetEntry(string input)
 		{
 			var pattern = @"(\d+)-(\d+)\s(\w):\s(\w*)";
-			var r = new Regex(pattern, RegexOptions.IgnoreCase);
-			var m = r.Match(input);
-			if (m.Success)
+			var regex = new Regex(pattern, RegexOptions.IgnoreCase);
+			var match = regex.Match(input);
+			if (match.Success)
 			{
-				return new Entry(Convert.ToInt32(m.Groups[1].Value), Convert.ToInt32(m.Groups[2].Value), Convert.ToChar(m.Groups[3].Value), m.Groups[4].Value);
+				return new Entry(Convert.ToInt32(match.Groups[1].Value), Convert.ToInt32(match.Groups[2].Value), Convert.ToChar(match.Groups[3].Value), match.Groups[4].Value);
 			}
 			return null;
 		}
