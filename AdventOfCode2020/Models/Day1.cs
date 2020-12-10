@@ -8,6 +8,11 @@
 		{
 		}
 
+		public override void Initialize()
+		{
+			GetInput();
+		}
+
 		public override string Level1()
 		{
 			for (int i = 0; i < Input.Length; i++)

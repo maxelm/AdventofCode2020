@@ -12,6 +12,11 @@ namespace AdventOfCode2020.Models
 
 		public override int Day => 2;
 
+		public override void Initialize()
+		{
+			GetInput();
+		}
+
 		public override string Level1()
 		{
 			int counter = 0;

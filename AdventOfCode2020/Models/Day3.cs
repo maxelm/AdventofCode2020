@@ -11,6 +11,11 @@ namespace AdventOfCode2020.Models
 
 		public override int Day => 3;
 
+		public override void Initialize()
+		{
+			GetInput();
+		}
+
 		public override string Level1()
 		{
 			return GetTreesHitForSlope(new Slope(3, 1)).ToString();
@@ -19,7 +24,7 @@ namespace AdventOfCode2020.Models
 		public override string Level2()
 		{
 			var slopes = new List<Slope> { new Slope(1, 1), new Slope(3, 1), new Slope(5, 1), new Slope(7, 1), new Slope(1,2) };
-			return slopes.Aggregate((long)0, (value, next) => value * GetTreesHitForSlope(next)).ToString();
+			return slopes.Aggregate((long)1, (value, next) => value * GetTreesHitForSlope(next)).ToString();
 		}
 
 		private long GetTreesHitForSlope(Slope slope)
